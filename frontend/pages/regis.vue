@@ -8,7 +8,7 @@
                         <p class="text-sm mt-2">ระบบประเมินบุคลากรวิทยาลัยเทคนิคน่าน</p>
                     </v-sheet>
                     <v-card-text>
-                        <v-form>
+                        <v-form @submit.prevent="saveMember">
                             <v-row>
                                 <v-col cols="12" md="6">
                                     <v-text-field label="ชื่อ" v-model="form.first_name" :error-messages="error.first_name"></v-text-field>
