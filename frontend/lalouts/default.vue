@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-const {mdAndDown} =
+// const {mdAndDown} =
 </script>
 
 <style scoped>
