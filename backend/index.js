@@ -18,6 +18,10 @@ app.use('/uploads',express.static(path.join('uploads')))
 const profile = require('./routes/profile')
 app.use('/api/profile',profile)
 
+const auth = require('./routes/auth')
+app.use('/api/auth',auth)
+
+
 
 // Block 404 Status
 app.use( (req,res) => res.status(404).json({ message: 'เซิร์ฟเวอร์กำลังปิดปรับปรุง!' }) )

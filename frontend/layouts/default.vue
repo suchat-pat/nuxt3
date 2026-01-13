@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import axios from 'axios';
 import { useDisplay } from 'vuetify';
-// import {api} from '../API/api'
+import {api} from '../API/api'
 const {mdAndDown} = useDisplay()
 const isMobile = computed(() => mdAndDown.value)
 const drawer = ref(false)
