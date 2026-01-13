@@ -24,11 +24,11 @@ router.post('/login',async (req,res) => {
 router.post('/regis',async (req,res) => {
     try{
         const {first_name,last_name,email,username,password,role} = req.body
-        const hashPass = await bc.hash()
+        const hashPass = await bc.hash(password,10)
         const [rows] = await db.query(`insert into tb_member (first_name,last_name,email,username,password,role) values (?,?,?,?,?,?)`,[first_name,last_name,email,username,hashPass,role])
         res.json({rows,message:'Register Success'})
     }catch(err){
-        console.error("Error Register")
+        console.error("Error Register",err)
         res.status(500).json({ message:'Error Register' })
     }
 })

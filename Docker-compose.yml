@@ -55,7 +55,7 @@ services:
       - ./database:/docker-entrypoint-initdb.d
     environment:
       MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABSE: nuxt3
+      MYSQL_DATABASE: nuxt3
     networks: ["app-network"]
 
 networks:
