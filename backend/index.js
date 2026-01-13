@@ -15,7 +15,8 @@ app.use(fileupload())
 app.use('/uploads',express.static(path.join('uploads')))
 
 // API  Routes =======================
-
+const profile = require('./routes/profile')
+user.app('/api/profile',profile)
 
 
 // Block 404 Status
