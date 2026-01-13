@@ -21,6 +21,9 @@ app.use('/api/profile',profile)
 const auth = require('./routes/auth')
 app.use('/api/auth',auth)
 
+const edit_eva = require('./routes/Eva/edit_eva')
+app.use('/api/Eva/edit_eva',edit_eva)
+
 
 
 // Block 404 Status
