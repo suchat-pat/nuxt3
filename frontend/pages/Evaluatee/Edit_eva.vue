@@ -60,7 +60,7 @@ const form = ref({
 })
 const confirmPassword = ref('')
 const error = ref<Record<string,string>>({})
-const token = p
+const token = process.client ? localStorage.getItem('token') : null
 
 const emailReget = /^[^\s]+@[^\s]+\.[^\s]{2,}$/i
 function validateForm(){
