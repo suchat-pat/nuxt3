@@ -85,7 +85,9 @@ function validateForm(){
 
 const fetch = async () => {
     try{
-        const res = await axios.get(`${staff}/totpic`,{headers : {Authorization : `Bearer ${token}`}})
+        const res = await axios.get(`${staff}/topic`, {
+            headers: { Authorization: `Bearer ${token}` }
+        })
         result.value = res.data
     }catch(err){
         console.error("Error Fetching",err)
@@ -98,7 +100,7 @@ const saveMember = async () =>{
     try{
         form.value.id_topic
         ? await axios.put(`${staff}/topic/${form.value.id_topic}`,form.value,{headers : {Authorization : `Bearer ${token}`}})
-        : await axios.post(`${api}/topic`,form.value,{headers : {Authorization: `Bearer ${token}`}})
+        : await axios.post(`${staff}/topic`,form.value,{headers : {Authorization: `Bearer ${token}`}})
         alert('ทำรายการสำเร็จ')
         await fetch()
         await reset()

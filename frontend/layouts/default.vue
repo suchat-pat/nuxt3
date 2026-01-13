@@ -14,7 +14,7 @@
             </v-list>
         </v-navigation-drawer>
         <v-main>
-            <v-container fluid>
+            <v-container fluid class="ma-2">
                 <NuxtPage />
             </v-container>
         </v-main>
@@ -39,12 +39,15 @@ const roles = [
     {title:'จัดการผู้รับการประเมิน',to:'/Staff/ManageEva',role:'ฝ่ายบุคลากร'},
     {title:'จัดการกรรมการประเมิน',to:'/Staff/ManageCommit',role:'ฝ่ายบุคลากร'},
     {title:'จัดการหัวข้อการประเมิน',to:'/Staff/Topic',role:'ฝ่ายบุคลากร'},
+    {title:'จัดการตัวชี้วัด',to:'/Staff/Indicate',role:'ฝ่ายบุคลากร'},
     
     //commit
     {title:'รายชื่อผู้รับการประเมิน',to:'/Committee/',role:'กรรมการประเมิน'},
     
     //eva
     {title:'หน้าหลัก',to:'/Evaluatee/',role:'ผู้รับการประเมินผล'},
+    {title:'แก้ไขข้อมูลส่วนคัว',to:'/Evaluatee/Edit_eva',role:'ผู้รับการประเมินผล'},
+    {title:'แบบประเมินตนเอง',to:'/Evaluatee/Selfeva',role:'ผู้รับการประเมินผล'},
 ]
 const navitem = computed(() =>
     roles.filter((item) => item.role.includes(user.value.role))

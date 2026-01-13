@@ -20,7 +20,7 @@ const {verifyToken,requireRole} = require('../../middleware/authMiddleware')
 // get API
 router.get('/',verifyToken,requireRole('ฝ่ายบุคลากร'),async (req,res) => {
     try{
-        const [rows] = await db.query(`select * from tb_topic`)
+        const [rows] = await db.query(`select * from tb_topic order by id_topic desc`)
         res.json(rows)
     }catch(err){
         console.error("Error Get",err)
@@ -44,7 +44,7 @@ router.get('/:id_topic',verifyToken,requireRole('ฝ่ายบุคลาก�
 // post API
 router.post('/',verifyToken,requireRole('ฝ่ายบุคลากร'),async (req,res) => {
     try{
-        const {name_toic} = req.body
+        const {name_topic} = req.body
         const [rows] = await db.query(`insert into tb_topic (name_topic) values (?)`,[name_topic])
         res.json({rows,message:'Insert Success'})
     }catch(err){
@@ -57,7 +57,7 @@ router.post('/',verifyToken,requireRole('ฝ่ายบุคลากร'),asy
 router.put('/:id_topic',verifyToken,requireRole('ฝ่ายบุคลากร'),async (req,res) => {
     try{
         const {id_topic} = req.params
-        const {name_toic} = req.body
+        const {name_topic} = req.body
         const [rows] = await db.query(`update tb_topic set name_topic=? where id_topic='${id_topic}'`,[name_topic])
         res.json({rows,message:'Update Success'})
     }catch(err){

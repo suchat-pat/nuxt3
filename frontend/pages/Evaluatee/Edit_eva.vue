@@ -44,11 +44,7 @@
 
 <script setup lang="ts">
 import axios from 'axios'
-// import {eva} from '../API/api'
-
-definePageMeta({
-    layout: false
-})
+import {eva} from '../API/api'
 
 const form = ref({
     first_name:'',
@@ -72,7 +68,7 @@ function validateForm(){
     else if(!emailReget.test(f.email.trim()))error.value.email='รูปแบบอีเมลไม่ถูกต้อง' 
     if(!f.username.trim())error.value.username='กรุณากรอกชื่อผู้ใช้' 
     else if(f.username.trim().length < 4)error.value.username='ต้องมีอย่างน้อย 4 ตัวอักษร' 
-    if(f.password.trim()){
+    if(f.password && f.password.trim()){
         if(f.password.trim().length < 6)error.value.password='ต้องมีอย่างน้อย 6 ตัวอักษร' 
         if(!confirmPassword.value.trim())error.value.confirmPassword='กรุณากรอกชื่อ' 
         else if(confirmPassword.value.trim() != f.password.trim())error.value.confirmPassword='รหัสผ่านไม่ตรงกัน' 
@@ -84,18 +80,19 @@ function validateForm(){
 const saveMember = async () =>{
     if(!validateForm())return
     try{
-        await axios.post(`${eva}/edit_eva/edit`,form.value)
-        alert('สมัครสำเร็จ')
+        await axios.put(`${eva}/edit_eva`,form.value,{headers:{Authorization:`Bearer ${token}`}})
+        alert('แก้ไขสำเร็จ')
+        localStorage.removeItem('token')
         navigateTo('/')
     }catch(err){
-        console.error('Error POST Member!!',err)
+        console.error('Error PUT User!!',err)
     }
 }
 
 const fetchUser = async () =>{
     try{
         const res = await axios.get(`${eva}/edit_eva`,{headers:{Authorization:`Bearer ${token}`}})
-        user.value = res.data
+        form.value = res.data
     }catch(err){
         console.error('Error GET User!!',err)
     }
