@@ -1,11 +1,10 @@
 <template>
     <v-container fluid class="fill-height">
         <v-row justify="center" align="center">
-            <v-col cols="12" md="8" lg="6">
+            <v-col cols="12">
                 <v-card >
-                    <v-sheet color="#7d0c14" class="pa-4 text-center text-white">
+                    <v-sheet color="#404040" class="pa-4 text-center text-white">
                         <h1 class="text-h5 font-weight-bold">สมัครสมาชิก</h1>
-                        <p class="text-sm mt-2">ระบบประเมินบุคลากรวิทยาลัยเทคนิคน่าน</p>
                     </v-sheet>
                     <v-card-text>
                         <v-form @submit.prevent="saveMember">
@@ -29,11 +28,10 @@
                                     <v-text-field label="ยืนยันรหัสผ่าน" v-model="confirmPassword" type="password" :error-messages="error.confirmPassword"></v-text-field>
                                 </v-col>
                                 <v-col cols="12">
-                                    <v-select label="เลือกประเภทสมาชิก" :items="['ฝ่ายบุคลากร','กรรมการประเมิน','ผู้รับการประเมินผล']" v-model="form.role" :error-messages="error.role"></v-select>
+                                    <v-alert>{{ form.role }}</v-alert>
                                 </v-col>
                                 <v-col cols="12" class="text-center">
-                                    <v-btn type="submit" color="#7d0c14">สมัคร</v-btn>&nbsp;&nbsp;&nbsp;&nbsp;<v-btn type="reset" color="#7d0c14">ยกเลิก</v-btn>
-                                    <p class="text-sm mt-2">มีบัญชีอยู่แล้ว? <nuxt-link to="/" class="text-maroon"><u>เข้าสู่ระบบ</u></nuxt-link></p>
+                                    <v-btn type="submit" color="success">แก้ไข</v-btn>&nbsp;&nbsp;&nbsp;&nbsp;<v-btn type="reset" color="error">ยกเลิก</v-btn>
                                 </v-col>
                             </v-row>
                         </v-form>
@@ -46,7 +44,7 @@
 
 <script setup lang="ts">
 import axios from 'axios'
-import {api} from '../API/api'
+// import {eva} from '../API/api'
 
 definePageMeta({
     layout: false
@@ -62,6 +60,7 @@ const form = ref({
 })
 const confirmPassword = ref('')
 const error = ref<Record<string,string>>({})
+const token = process.client ? localStorage.getItem('token') : null
 
 const emailReget = /^[^\s]+@[^\s]+\.[^\s]{2,}$/i
 function validateForm(){
@@ -73,24 +72,35 @@ function validateForm(){
     else if(!emailReget.test(f.email.trim()))error.value.email='รูปแบบอีเมลไม่ถูกต้อง' 
     if(!f.username.trim())error.value.username='กรุณากรอกชื่อผู้ใช้' 
     else if(f.username.trim().length < 4)error.value.username='ต้องมีอย่างน้อย 4 ตัวอักษร' 
-    if(!f.password.trim())error.value.password='กรุณากรอกรหัสผ่าน' 
-    else if(f.password.trim().length < 6)error.value.password='ต้องมีอย่างน้อย 6 ตัวอักษร' 
-    if(!confirmPassword.value.trim())error.value.confirmPassword='กรุณากรอกชื่อ' 
-    else if(confirmPassword.value.trim() != f.password.trim())error.value.confirmPassword='รหัสผ่านไม่ตรงกัน' 
-    if(!f.role.trim())error.value.role='กรุณาเลือกประเภทสใมาชิก' 
+    if(f.password.trim()){
+        if(f.password.trim().length < 6)error.value.password='ต้องมีอย่างน้อย 6 ตัวอักษร' 
+        if(!confirmPassword.value.trim())error.value.confirmPassword='กรุณากรอกชื่อ' 
+        else if(confirmPassword.value.trim() != f.password.trim())error.value.confirmPassword='รหัสผ่านไม่ตรงกัน' 
+    }
+    if(!f.role.trim())error.value.role='กรุณาเลือกประเภทสมาชิก'
     return Object.keys(error.value).length === 0
 }
 
 const saveMember = async () =>{
     if(!validateForm())return
     try{
-        await axios.post(`${api}/auth/regis`,form.value)
+        await axios.post(`${eva}/edit_eva/edit`,form.value)
         alert('สมัครสำเร็จ')
         navigateTo('/')
     }catch(err){
         console.error('Error POST Member!!',err)
     }
 }
+
+const fetchUser = async () =>{
+    try{
+        const res = await axios.get(`${eva}/edit_eva`,{headers:{Authorization:`Bearer ${token}`}})
+        user.value = res.data
+    }catch(err){
+        console.error('Error GET User!!',err)
+    }
+}
+onMounted(fetchUser)
 </script>
 
 <style scoped>

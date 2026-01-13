@@ -27,6 +27,7 @@ import { useDisplay } from 'vuetify';
 import {api} from '../API/api'
 
 const token = process.client ? localStorage.getItem('token') : null
+
 const {mdAndDown} = useDisplay()
 const isMobile = computed(() => mdAndDown.value)
 const drawer = ref(false)
@@ -59,11 +60,13 @@ const fetchUser = async () =>{
         return await navigateTo('/',{replace: true})
     }
     try{
-        const res = await axios.get(`${api}/profile`,{headers:{Authorization: `Bearer ${token}`}})
+        const res = await axios.get(`${api}/profile`,{headers:{Authorization:`Bearer ${token}`}})
         user.value = res.data
         console.log("user Value",user.value)
     }catch(err){
         console.error('Error GET User!!',err)
+        localStorage.removeItem('token')
+        await navigateTo('/',{replace: true})
     }
 }
 onMounted(fetchUser)
