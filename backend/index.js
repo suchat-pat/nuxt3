@@ -41,6 +41,9 @@ app.use('/api/Commit/save_score',save_score)
 const show_eva = require('./routes/Commit/show_eva')
 app.use('/api/Commit/show_eva',show_eva)
 
+const detail_commit = require('./routes/Commit/detail_commit')
+app.use('/api/Commit/detail_commit',detail_commit)
+
 // Staff API =========================
 const member = require('./routes/Staff/member')
 app.use('/api/Staff/member',member)
