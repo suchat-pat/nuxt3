@@ -31,6 +31,13 @@ app.use('/api/Eva/selfeva',selfeva)
 const score_member = require('./routes/Eva/score_member')
 app.use('/api/Eva/score_member',score_member)
 
+const score_commit = require('./routes/Eva/score_commit')
+app.use('/api/Eva/score_commit',score_commit)
+
+//commit
+const save_score = require('./routes/Commit/save_score')
+app.use('/api/Commit/save_score',save_score)
+
 // Staff API =========================
 const member = require('./routes/Staff/member')
 app.use('/api/Staff/member',member)
