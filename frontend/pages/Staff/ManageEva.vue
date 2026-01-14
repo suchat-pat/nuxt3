@@ -137,7 +137,7 @@ const saveMember = async () =>{
     try{
         const payload = {
             id_member: form.value.id_member,
-            first_name:form.value.username,
+            first_name:form.value.first_name,
             last_name:form.value.last_name,
             email:form.value.email,
             username:form.value.username,
