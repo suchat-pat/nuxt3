@@ -20,7 +20,7 @@
                                     <v-select label="น้ำหนักคะแนน" v-model="form.point_indicate" :items="[1,2,3,4,5]" :error-messages="error.point_indicate" />
                                 </v-col>
                                 <v-col cols="12" md="6">
-                                    <v-select label="ลักษณะตัวเลือกคะแนน" v-model="form.check_indicate" :items="[]" :error-messages="error.point_indicate" />
+                                    <v-select label="ลักษณะตัวเลือกคะแนน" v-model="form.check_indicate" :items="[{title:'มี',value:'y'},{title:'ไม่มี',value:'n'}]" :error-messages="error.check_indicate" />
                                 </v-col>
                                 <v-row>
                                     <v-col cols="12" md="6">
@@ -111,8 +111,8 @@ function validateForm(){
     if(!f.id_topic)error.value.id_topic='กรุณาเลือกหัวข้อการประเมิน' 
     if(!f.name_indicate.trim())error.value.name_indicate='กรุณากรอกชื่อตัวชี้วัด' 
     if(!f.detail_indicate.trim())error.value.detail_indicate='กรุณากรอกรายละเอียด' 
-    if(!f.point_indicate.trim())error.value.point_indicate='กรุณาเลือกน้ำหนักคะแนน' 
-    if(!f.check_indicate.trim())error.value.check_indicate='กรุณาเลือกลักษณะตัวเลือกคะแนน' 
+    if(!f.point_indicate)error.value.point_indicate='กรุณาเลือกน้ำหนักคะแนน' 
+    if(!f.check_indicate)error.value.check_indicate='กรุณาเลือกลักษณะตัวเลือกคะแนน' 
     return Object.keys(error.value).length === 0
 }
 
@@ -131,7 +131,7 @@ const fetch = async () => {
 const saveMember = async () =>{
     if(!validateForm())return
     try{
-        form.value.id_topic
+        form.value.id_indicate
         ? await axios.put(`${staff}/indicate/${form.value.id_indicate}`,form.value,{headers : {Authorization : `Bearer ${token}`}})
         : await axios.post(`${staff}/indicate`,form.value,{headers : {Authorization: `Bearer ${token}`}})
         alert('ทำรายการสำเร็จ')
