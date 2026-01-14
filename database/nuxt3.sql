@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Jan 13, 2026 at 07:40 AM
+-- Generation Time: Jan 14, 2026 at 09:04 AM
 -- Server version: 9.5.0
 -- PHP Version: 8.3.29
 
@@ -20,6 +20,31 @@ SET time_zone = "+00:00";
 --
 -- Database: `nuxt3`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_commit`
+--
+
+CREATE TABLE `tb_commit` (
+  `id_commit` int NOT NULL,
+  `id_member` int NOT NULL,
+  `id_eva` int NOT NULL,
+  `status_commit` varchar(1) NOT NULL,
+  `level_commit` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `detail_commit` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `signature` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `tb_commit`
+--
+
+INSERT INTO `tb_commit` (`id_commit`, `id_member`, `id_eva`, `status_commit`, `level_commit`, `detail_commit`, `signature`) VALUES
+(1, 3, 1, 'n', 'ประธาน', NULL, NULL),
+(2, 4, 1, 'n', 'กรรมการ', NULL, NULL),
+(3, 5, 1, 'n', 'เลขา', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -42,7 +67,7 @@ CREATE TABLE `tb_eva` (
 --
 
 INSERT INTO `tb_eva` (`id_eva`, `id_member`, `id_sys`, `status_eva`, `total_eva`, `total_commit`, `day_eva`) VALUES
-(1, 2, 1, 1, NULL, NULL, '2026-01-13');
+(1, 2, 1, 2, 55.00, NULL, '2026-01-13');
 
 -- --------------------------------------------------------
 
@@ -59,6 +84,16 @@ CREATE TABLE `tb_evadetail` (
   `detail_eva` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `file_eva` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `tb_evadetail`
+--
+
+INSERT INTO `tb_evadetail` (`id_eva`, `id_indicate`, `status_eva`, `score_member`, `score_commit`, `detail_eva`, `file_eva`) VALUES
+(1, 1, 1, 2, NULL, 'dwad', '1768295791912q2gntdgjx3s.jpg'),
+(1, 2, 1, 2, NULL, '1111', NULL),
+(1, 3, 1, 4, NULL, NULL, '1768295791919u94uk2u8beg.jpg'),
+(1, 4, 1, 3, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -107,7 +142,10 @@ CREATE TABLE `tb_member` (
 
 INSERT INTO `tb_member` (`id_member`, `first_name`, `last_name`, `email`, `username`, `password`, `role`) VALUES
 (1, 'aaaa', 'aaaa', 'aaaa@gmail.com', 'aaaa', '$2b$10$BXp6brHgONat0E80Z2h7MOQf.KdTHfX1DnyYwvdQevC4NrYiSGpO6', 'ฝ่ายบุคลากร'),
-(2, 'eeee55', 'eeee55', 'eeee@gmail.com', 'eeee', '$2b$10$neAp93IsPHnvueII0xRogulwL.BupyiKBic3NehlvzLKA2KT1ShRq', 'ผู้รับการประเมินผล');
+(2, 'eeee55', 'eeee55', 'eeee@gmail.com', 'eeee', '$2b$10$neAp93IsPHnvueII0xRogulwL.BupyiKBic3NehlvzLKA2KT1ShRq', 'ผู้รับการประเมินผล'),
+(3, 'ssss', 'ssss', 'ssss@gmail.com', 'ssss', '$2b$10$JiOefto7MDnSukkQuYtq8.uvjtZKmamFumaGSkN39GxbzSJVoSZGe', 'กรรมการประเมิน'),
+(4, 'dddd', 'dddd', 'dddd@gmail.com', 'dddd', '$2b$10$jl8Xn1.iiSe4chDkcGYvD.wLagy7R93v3Jz8Q/FY5b6fWE80FBfoa', 'กรรมการประเมิน'),
+(5, 'ffff', 'ffff', 'ffff@gmail.com', 'ffff', '$2b$10$FLr17HVVXGtS5eHl.aXYJ.lzfx6de5YvnTp9iSplQPineJD5n9p66', 'กรรมการประเมิน');
 
 -- --------------------------------------------------------
 
@@ -155,6 +193,12 @@ INSERT INTO `tb_topic` (`id_topic`, `name_topic`) VALUES
 --
 
 --
+-- Indexes for table `tb_commit`
+--
+ALTER TABLE `tb_commit`
+  ADD PRIMARY KEY (`id_commit`);
+
+--
 -- Indexes for table `tb_eva`
 --
 ALTER TABLE `tb_eva`
@@ -189,6 +233,12 @@ ALTER TABLE `tb_topic`
 --
 
 --
+-- AUTO_INCREMENT for table `tb_commit`
+--
+ALTER TABLE `tb_commit`
+  MODIFY `id_commit` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `tb_eva`
 --
 ALTER TABLE `tb_eva`
@@ -204,7 +254,7 @@ ALTER TABLE `tb_indicate`
 -- AUTO_INCREMENT for table `tb_member`
 --
 ALTER TABLE `tb_member`
-  MODIFY `id_member` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_member` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tb_system`

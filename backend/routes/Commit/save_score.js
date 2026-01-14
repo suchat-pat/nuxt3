@@ -5,11 +5,11 @@ const {verifyToken,requireRole} = require('../../middleware/authMiddleware')
 const path = require('path')
 const uploadDir = path.join(__dirname,'../../uploads/evadetail')
 
-router.get('/user/:id_eva',verifyToken,requireRole('ผู้รับการประเมินผล'),async (req,res) => {
+router.get('/user/:id_eva',verifyToken,requireRole('กรรมการประเมิน'),async (req,res) => {
     try{
         const id_member = req.user.id_member
         const id_eva = req.params.id_eva
-        const [rows] = await db.query(`select * from tb_member m,tb_eva e,tb_system s,tb_commit c where c.id_member=? and c.id and e.id_member=m.id_member and e.id_sys=s.id_sys `,[id_member])
+        const [rows] = await db.query(`select * from tb_member m,tb_eva e,tb_system s,tb_commit c where c.id_member=? and c.id_eva=e.id_eva and e.id_member=m.id_member and e.id_sys=s.id_sys order by e.id_eva desc`,[id_member])
         res.json(rows[0])
     }catch(err){
         console.error("Error GET User",err)
@@ -17,7 +17,7 @@ router.get('/user/:id_eva',verifyToken,requireRole('ผู้รับการ�
     }
 })
 
-router.get('/indicate/:id_eva',verifyToken,requireRole('ผู้รับการประเมินผล'),async (req,res) => {
+router.get('/indicate/:id_eva',verifyToken,requireRole('กรรมการประเมิน'),async (req,res) => {
     try{
         const id_member = req.user.id_member
         const id_eva = req.params.id_eva
@@ -33,7 +33,7 @@ router.get('/indicate/:id_eva',verifyToken,requireRole('ผู้รับกา
     }
 })
 
-router.post('/savescore/:id_eva',verifyToken,requireRole('ผู้รับการประเมินผล'),async (req,res) => {
+router.post('/savescore/:id_eva',verifyToken,requireRole('กรรมการประเมิน'),async (req,res) => {
     try{
         const id_member = req.user.id_member
         const id_eva = req.params.id_eva
