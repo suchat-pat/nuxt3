@@ -18,8 +18,8 @@
                                             {{ index1+1 }}.{{ index2+1 }} {{ indicate.name_indicate }} น้ำหนักคะแนน : {{ indicate.point_indicate }} คะแนนเต็ม : {{ indicate.point_indicate*4 }} รายละเอียด : {{ indicate.detail_indicate }}
                                         </p>
                                         <p v-if="indicate.detail_eva">คำอธบายเพิ่มเติม : {{ indicate.detail_eva }}</p>
-                                        <v-btn v-if="indicate.file_eva" color="success" @click="viweFile(indicate.file_eva)" class="small">ดูไฟล์</v-btn>
-                                        <v-select v-model="indicate.score" label="ใส่คะแนนประเมิน 1-4" :items="[1,2,3,4]"></v-select>
+                                        <v-btn v-if="indicate.file_eva" color="success" @click="viweFile(indicate.file_eva)" size="small">ดูไฟล์</v-btn>
+                                        <v-select v-model="indicate.score" label="ใส่คะแนนประเมิน 1-4" :items="[1,2,3,4]" class="mt-2"></v-select>
                                     </v-col>
                                 </v-row>
                             </v-card>
@@ -42,7 +42,7 @@
 
 <script setup lang="ts">
 import axios from 'axios'
-import {eva} from '../API/api'
+import {commit} from '../API/api'
 
 const user = ref({})
 const topics = ref([])
@@ -57,7 +57,7 @@ const viweFile = (filename:string) =>{
 
 const fetchUser = async () =>{
     try{
-        const res = await axios.get(`${eva}/save_score/user/${id_eva}`,{headers:{Authorization: `Bearer ${token}`}})
+        const res = await axios.get(`${commit}/save_score/user/${id_eva}`,{headers:{Authorization: `Bearer ${token}`}})
         user.value = res.data
     }catch(err){
         console.error("Error GET User",err)
@@ -65,7 +65,7 @@ const fetchUser = async () =>{
 }
 const fetchTopic = async () =>{
     try{
-        const res = await axios.get(`${eva}/save_score/indicate/${id_eva}`,{headers:{Authorization: `Bearer ${token}`}})
+        const res = await axios.get(`${commit}/save_score/indicate/${id_eva}`,{headers:{Authorization: `Bearer ${token}`}})
         topics.value = res.data
     }catch(err){
         console.error("Error GET Indicate",err)
@@ -93,9 +93,10 @@ const saveScore = async () =>{
     formData.append('scores',JSON.stringify(allScore))
     formData.append('detail_commit',detail_commit.value)
     try{
-        await axios.post(`${eva}/save_score/savescore/${id_eva}`,formData,{headers:{Authorization:`Bearer ${token}`}})
+        await axios.post(`${commit}/save_score/savescore/${id_eva}`,formData,{headers:{Authorization:`Bearer ${token}`}})
         alert('ประเมินสำเร็จ')
         await Promise.all([fetchTopic(),fetchUser()])
+        navigateTo('/Committee/Show_eva')
     }catch(err){
         console.error("Error POST Score",err)
     }

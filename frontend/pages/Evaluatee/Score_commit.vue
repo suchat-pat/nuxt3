@@ -37,7 +37,7 @@
                             </v-table>
                         </v-col>
                     </v-row>
-                    <v-card class="pa-2 text-end mt-4" color="success">คะแนนรวม : {{ (totalScore/3).toFixed(2) }} คะแนน&nbsp;&nbsp;</v-card>
+                    <v-card class="pa-2 text-end mt-4" color="success">คะแนนรวม : {{ totalScore.toFixed(2) ||  0}} คะแนน&nbsp;&nbsp;</v-card>
                     <div class="mt-4">
                         <v-card class="pa-2">
                             <v-row v-for="(commit,index) in commits" :key="commit.id_commit">

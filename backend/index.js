@@ -44,6 +44,12 @@ app.use('/api/Commit/show_eva',show_eva)
 const detail_commit = require('./routes/Commit/detail_commit')
 app.use('/api/Commit/detail_commit',detail_commit)
 
+const detail_eva = require('./routes/Commit/detail_eva')
+app.use('/api/Commit/detail_eva',detail_eva)
+
+const check_confirm = require('./routes/Commit/check_confirm')
+app.use('/api/Commit/check_confirm',check_confirm)
+
 // Staff API =========================
 const member = require('./routes/Staff/member')
 app.use('/api/Staff/member',member)

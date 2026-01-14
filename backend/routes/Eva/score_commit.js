@@ -59,10 +59,10 @@ router.get('/scores',verifyToken,requireRole('ผู้รับการปร�
                     c:null,
                 }
             }
-            if(row.status_eva === 2) scores[row.id_indicate].a = row.score_member*row.point_indicate
-            if(row.status_eva === 3) scores[row.id_indicate].a = row.score_member*row.point_indicate
-            if(row.status_eva === 4) scores[row.id_indicate].a = row.score_member*row.point_indicate
-            totalScore += (row.score_member*row.point_indicate)/3
+            if(row.status_eva === 2) scores[row.id_indicate].a = row.score_commit*row.point_indicate
+            if(row.status_eva === 3) scores[row.id_indicate].a = row.score_commit*row.point_indicate
+            if(row.status_eva === 4) scores[row.id_indicate].a = row.score_commit*row.point_indicate
+            totalScore += (row.score_commit*row.point_indicate)/3
         })
         res.json({scores,totalScore})
     }catch(err){

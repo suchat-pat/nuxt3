@@ -21,17 +21,8 @@ router.get('/indicate/:id_eva',verifyToken,requireRole('กรรมการป
     try{
         const id_member = req.user.id_member
         const id_eva = req.params.id_eva
-        const [[commit]] = await db.query(`select * from tb_commit where id_eva=? and id_member=?`,[id_eva,id_member])
-        var statusCommit = 0
-        if(commit.level_commit === 'ประธาน'){
-            statusCommit = 2
-        }else if(commit.level_commit === 'กรรมการ'){
-            statusCommit = 3
-        }else if(commit.level_commit === 'เลขา'){
-            statusCommit = 4
-        }
         const [topics] = await db.query(`select * from tb_topic`)
-        const [indicates] = await db.query(`select * from tb_indicate i,tb_evadetail d where i.id_indicate=d.id_indicate and d.id_eva=? and d.status_eva=?`,[id_eva,statusCommit])
+        const [indicates] = await db.query(`select * from tb_indicate i,tb_evadetail d where i.id_indicate=d.id_indicate and d.id_eva=? and d.status_eva in (1)`,[id_eva])
         const result = topics.map(t =>({
             ...t,
             indicates:indicates.filter((i) => i.id_topic === t.id_topic)
