@@ -21,7 +21,6 @@ app.use('/api/profile',profile)
 const auth = require('./routes/auth')
 app.use('/api/auth',auth)
 
-<<<<<<< HEAD
 //eva
 const edit_eva = require('./routes/Eva/edit_eva')
 app.use('/api/Eva/edit_eva',edit_eva)
@@ -32,9 +31,6 @@ app.use('/api/Eva/selfeva',selfeva)
 const score_member = require('./routes/Eva/score_member')
 app.use('/api/Eva/score_member',score_member)
 
-
-
-=======
 // Staff API =========================
 const member = require('./routes/Staff/member')
 app.use('/api/Staff/member',member)
@@ -42,10 +38,6 @@ app.use('/api/Staff/member',member)
 const topic = require('./routes/Staff/topic')
 app.use('/api/Staff/topic',topic)
 
-const edit_eva = require('./routes/Eva/edit_eva')
-app.use('/api/Eva/edit_eva',edit_eva)
-
->>>>>>> 51a3aa9144b6fefeb0f94e3e6b78eec733a07534
 // Block 404 Status
 app.use( (req,res) => res.status(404).json({ message: 'เซิร์ฟเวอร์กำลังปิดปรับปรุง!' }) )
 
