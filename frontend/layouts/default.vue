@@ -25,6 +25,9 @@
 import axios from 'axios';
 import { useDisplay } from 'vuetify';
 import {api} from '../API/api'
+
+const token = process.client ? localStorage.getItem('token') : null
+
 const {mdAndDown} = useDisplay()
 const isMobile = computed(() => mdAndDown.value)
 const drawer = ref(false)
@@ -33,6 +36,10 @@ const user = ref({})
 const roles = [
     //staff
     {title:'หน้าหลัก',to:'/Staff/',role:'ฝ่ายบุคลากร'},
+    {title:'จัดการผู้รับการประเมิน',to:'/Staff/ManageEva',role:'ฝ่ายบุคลากร'},
+    {title:'จัดการกรรมการประเมิน',to:'/Staff/ManageCommit',role:'ฝ่ายบุคลากร'},
+    {title:'จัดการหัวข้อการประเมิน',to:'/Staff/Topic',role:'ฝ่ายบุคลากร'},
+    {title:'จัดการตัวชี้วัด',to:'/Staff/Indicate',role:'ฝ่ายบุคลากร'},
     
     //commit
     {title:'รายชื่อผู้รับการประเมิน',to:'/Committee/',role:'กรรมการประเมิน'},
@@ -53,13 +60,13 @@ const logout = async () =>{
 }
 
 const fetchUser = async () =>{
-    const token = localStorage.getItem('token')
     if(!token){
         return await navigateTo('/',{replace: true})
     }
     try{
         const res = await axios.get(`${api}/profile`,{headers:{Authorization:`Bearer ${token}`}})
         user.value = res.data
+        console.log("user Value",user.value)
     }catch(err){
         console.error('Error GET User!!',err)
         localStorage.removeItem('token')

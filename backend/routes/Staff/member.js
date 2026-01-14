@@ -2,11 +2,11 @@ const express = require('express')
 const bc = require('bcryptjs')
 const router = express.Router()
 const db = require('../../db')
-const {verfyToken,requireRole} = require('../../middleware/authMiddleware')
+const {verifyToken,requireRole} = require('../../middleware/authMiddleware')
 
 // ================= DEMO =================
 // get API
-// router.get('/eva',verfyToken,requireRole('ฝ่ายบุคลากร'),async (req,res) => {
+// router.get('/eva',verifyToken,requireRole('ฝ่ายบุคลากร'),async (req,res) => {
 //     try{
 //         const [rows] = await db.query(``)
 //         res.json(rows)
@@ -18,7 +18,7 @@ const {verfyToken,requireRole} = require('../../middleware/authMiddleware')
 // ================= DEMO =================
 
 // get API
-router.get('/eva',verfyToken,requireRole('ฝ่ายบุคลากร'),async (req,res) => {
+router.get('/eva',verifyToken,requireRole('ฝ่ายบุคลากร'),async (req,res) => {
     try{
         const [rows] = await db.query(`select id_member,first_name,last_name,email,username,role from tb_member where role='ผู้รับการประเมินผล' order by id_member desc`)
         res.json(rows)
@@ -29,7 +29,7 @@ router.get('/eva',verfyToken,requireRole('ฝ่ายบุคลากร'),as
 })
 
 // get API
-router.get('/commit',verfyToken,requireRole('ฝ่ายบุคลากร'),async (req,res) => {
+router.get('/commit',verifyToken,requireRole('ฝ่ายบุคลากร'),async (req,res) => {
     try{
         const [rows] = await db.query(`select id_member,first_name,last_name,email,username,role from tb_member where role='กรรมการประเมิน' order by id_member desc`)
         res.json(rows)
@@ -40,7 +40,7 @@ router.get('/commit',verfyToken,requireRole('ฝ่ายบุคลากร')
 })
 
 // get API all
-router.get('/all',verfyToken,requireRole('ฝ่ายบุคลากร'),async (req,res) => {
+router.get('/all',verifyToken,requireRole('ฝ่ายบุคลากร'),async (req,res) => {
     try{
         const [rows] = await db.query(`select id_member,first_name,last_name,email,username,role from tb_member order by id_member desc`)
         res.json(rows)
@@ -51,7 +51,7 @@ router.get('/all',verfyToken,requireRole('ฝ่ายบุคลากร'),as
 })
 
 // get API By Params
-router.get('/commit',verfyToken,requireRole('ฝ่ายบุคลากร'),async (req,res) => {
+router.get('/commit',verifyToken,requireRole('ฝ่ายบุคลากร'),async (req,res) => {
     try{
         const {id_member} = req.params
         const [rows] = await db.query(`select id_member,first_name,last_name,email,username,role where id_member='${id_member}' order by id_member desc`)
@@ -64,7 +64,7 @@ router.get('/commit',verfyToken,requireRole('ฝ่ายบุคลากร')
 })
 
 // Put API
-router.put('/:id_member',verfyToken,requireRole('ฝ่ายบุคลากร'),async (req,res) => {
+router.put('/:id_member',verifyToken,requireRole('ฝ่ายบุคลากร'),async (req,res) => {
     try{
         const {id_member} = req.params
         const {first_name,last_name,email,username,password,role} = req.body
@@ -82,7 +82,7 @@ router.put('/:id_member',verfyToken,requireRole('ฝ่ายบุคลาก�
 })
 
 // Delete API
-router.delete('/:id_member',verfyToken,requireRole('ฝ่ายบุคลากร'),async (req,res) => {
+router.delete('/:id_member',verifyToken,requireRole('ฝ่ายบุคลากร'),async (req,res) => {
     try{
         const {id_member} = req.params
         const [rows] = await db.query(`delete from tb_member where id_member='${id_member}'`)
